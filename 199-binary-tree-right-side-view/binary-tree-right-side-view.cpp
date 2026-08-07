@@ -13,33 +13,17 @@ class Solution {
 public:
     vector<int> rightSideView(TreeNode* root) {
 
-        vector<int> res;
-        queue<TreeNode*> q;
+       vector<int> res;
+       dfs(root, res, 0);
+       return res;
 
-        if(root == nullptr) return res;
-        q.push(root);
-        int prevChild = 1;
-
-        while(!q.empty()){
-            int child = 0;
-            int last;
-            while(prevChild--){
-                TreeNode* front = q.front();
-                last = front->val;
-                q.pop();
-                if(front->left != nullptr){
-                    q.push(front->left);
-                    child++;
-                }
-                if(front->right != nullptr){
-                    q.push(front->right);
-                    child++;
-                }
-            }
-            res.push_back(last);
-            prevChild = child;
+    }
+    void dfs(TreeNode* root, vector<int> &res, int depth){
+        if(root == nullptr) return;
+        if(res.size() == depth){
+            res.push_back(root->val);
         }
-
-        return res;
+        dfs(root->right, res, depth+1);
+        dfs(root->left, res, depth+1);
     }
 };
